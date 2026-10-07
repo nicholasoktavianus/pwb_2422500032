@@ -28,4 +28,10 @@ class Produk_kategori_model extends CI_Model
         $this->db->delete($this->_table, array('id_kategori' => $id));
         return ($this->db->affected_rows() == 1);
     }
+        public function ubah($data, $id)
+    {
+        $this->db->where('id_kategori', $id);
+        // update() mengembalikan TRUE walau data tidak berubah (affected_rows = 0)
+        return (bool) $this->db->update($this->_table, $data);
+    }
 }

@@ -93,5 +93,42 @@ class Kategori_controller extends CI_Controller
         }
         redirect('admin/kategori');
     }
+        // ---------- UPDATE ----------
+
+    public function ubah_kategori($id)
+    {
+        // cek dulu apakah id dengan kategori ada
+        $kategori = $this->Produk_kategori_model->get_by_id($id);
+
+        if (!$kategori) {
+            $this->_alert('danger', 'Kategori tidak ditemukan!!');
+            redirect('admin/kategori');
+        }
+
+        $this->form_validation->set_rules('nama_kategori', 'Nama Kategori', 'required');
+
+        if ($this->form_validation->run() !== FALSE) {
+            $this->_ubah_kategori($id);
+        } else {
+            $data['title']    = 'Ubah Kategori';
+            $data['kategori'] = $kategori;
+            $this->_render('administrator/kategori/ubah_kategori', $data);
+        }
+    }
+
+    private function _ubah_kategori($id)
+    {
+        $data = array(
+            'nama'      => ucwords($this->input->post('nama_kategori', TRUE)),
+            'deskripsi' => ucfirst($this->input->post('deskripsi_kategori', TRUE))
+        );
+
+        if ($this->Produk_kategori_model->ubah($data, $id)) {
+            $this->_alert('success', 'Berhasil mengubah kategori!!');
+        } else {
+            $this->_alert('danger', 'Gagal mengubah kategori!!');
+        }
+        redirect('admin/kategori');
+    }
 }
 
