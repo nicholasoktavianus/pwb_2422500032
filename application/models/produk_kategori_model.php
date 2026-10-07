@@ -7,7 +7,14 @@ class Produk_kategori_model extends CI_Model
 
     public function get_all()
     {
-        $query = $this->db->get($this->_table);
-        return $query->result_array();
+        $this->db->order_by('id_kategori', 'ASC');
+        return $this->db->get($this->_table)->result_array();
+    }
+
+    public function tambah($data)
+    {
+        $this->db->insert($this->_table, $data);
+        // cek apakah berhasil atau tidak input data
+        return ($this->db->affected_rows() == 1);
     }
 }
