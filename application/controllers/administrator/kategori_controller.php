@@ -75,4 +75,23 @@ class Kategori_controller extends CI_Controller
         }
         redirect('admin/kategori');
     }
+        // ---------- DELETE ----------
+
+    public function hapus_kategori($id)
+    {
+        // cek apakah ada kategori
+        $kategori = $this->Produk_kategori_model->get_by_id($id);
+
+        if ($kategori) {
+            if ($this->Produk_kategori_model->hapus($id)) {
+                $this->_alert('success', 'Berhasil menghapus kategori!!');
+            } else {
+                $this->_alert('danger', 'Gagal menghapus kategori!!');
+            }
+        } else {
+            $this->_alert('danger', 'Kategori tidak ditemukan!!');
+        }
+        redirect('admin/kategori');
+    }
 }
+

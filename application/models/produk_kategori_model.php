@@ -17,4 +17,15 @@ class Produk_kategori_model extends CI_Model
         // cek apakah berhasil atau tidak input data
         return ($this->db->affected_rows() == 1);
     }
+    public function get_by_id($id)
+    {
+        $this->db->where('id_kategori', $id);
+        return $this->db->get($this->_table)->row_array();
+    }
+
+    public function hapus($id)
+    {
+        $this->db->delete($this->_table, array('id_kategori' => $id));
+        return ($this->db->affected_rows() == 1);
+    }
 }
