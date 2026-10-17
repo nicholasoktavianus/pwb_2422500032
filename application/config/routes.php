@@ -63,3 +63,14 @@ $route['admin/kategori']                = 'administrator/Kategori_controller/ind
 $route['admin/kategori/tambah']         = 'administrator/Kategori_controller/tambah_kategori';
 $route['admin/kategori/ubah/(:num)']    = 'administrator/Kategori_controller/ubah_kategori/$1';
 $route['admin/kategori/hapus/(:num)']   = 'administrator/Kategori_controller/hapus_kategori/$1';
+
+$route['admin/mahasiswa']              = 'administrator/admin_mahasiswa_controller/index';
+$route['admin/mahasiswa/tambah']       = 'administrator/admin_mahasiswa_controller/tambah';
+$route['admin/mahasiswa/ubah/(:num)']  = 'administrator/admin_mahasiswa_controller/ubah/$1';
+$route['admin/mahasiswa/hapus/(:num)'] = 'administrator/admin_mahasiswa_controller/hapus/$1';
+
+$route['admin/produk']                 = 'administrator/Produk_controller/index';
+$route['admin/produk/tambah']          = 'administrator/Produk_controller/tambah_produk';
+$route['admin/produk/ubah/(:num)']     = 'administrator/Produk_controller/ubah_produk/$1';
+$route['admin/produk/hapus/(:num)']    = 'administrator/Produk_controller/hapus_produk/$1';
+$route['admin/produk/hapus_gambar/(:num)'] = 'administrator/Produk_controller/hapus_gambar/$1';
