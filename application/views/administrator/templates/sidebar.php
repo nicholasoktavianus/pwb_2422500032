@@ -15,7 +15,7 @@
         </div>
         <div class="info">
           <a href="#" class="d-block">
-    <?= isset($full_name) ? $full_name : 'Administrator'; ?>
+    <?= isset($full_name) ? $full_name : 'Nicholas Oktavianus'; ?>
 </a>
         </div>
       </div>
@@ -48,7 +48,6 @@
     </a>
 
     <ul class="nav nav-treeview">
-        <!-- Menu Kategori -->
         <li class="nav-item">
             <a href="<?= base_url('admin/kategori'); ?>"
                class="nav-link <?= ($this->uri->segment(2) == 'kategori') ? 'active' : ''; ?>">
@@ -57,16 +56,6 @@
             </a>
         </li>
 
-        <!-- Menu Mahasiswa -->
-        <li class="nav-item">
-            <a href="<?= base_url('admin/mahasiswa'); ?>"
-               class="nav-link <?= ($this->uri->segment(2) == 'mahasiswa') ? 'active' : ''; ?>">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Mahasiswa</p>
-            </a>
-        </li>
-
-        <!-- Menu Produk -->
         <li class="nav-item">
             <a href="<?= base_url('admin/produk'); ?>"
                class="nav-link <?= ($this->uri->segment(2) == 'produk') ? 'active' : ''; ?>">

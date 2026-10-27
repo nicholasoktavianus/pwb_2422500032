@@ -235,7 +235,6 @@ class Produk_controller extends CI_Controller
         }
     }
 
-    
     private function __ubah_produk($id)
     {
         // Ambil data produk dari formulir
@@ -342,10 +341,59 @@ class Produk_controller extends CI_Controller
 
     public function hapus_produk($id)
     {
-        // ... isi hapus_produk kamu, tidak diubah ...
-    }   // <- penutup hapus_produk
+        // Check apakah ada produk
+        $produk = $this->produk_model->get_by_id($id);
 
-    // TAMBAHKAN DI SINI
+        if ($produk) {
+            // Ambil data gambar
+            $list_gambar =
+                $this->produk_gambar_model->get_by_produk_id($id);
+
+            foreach ($list_gambar as $gambar) {
+                $id_gambar = $gambar['id_gambar'];
+                $nama_gambar = $gambar['nama_gambar'];
+
+                // Hapus gambar dari database
+                $this->produk_gambar_model->hapus($id_gambar);
+
+                // Hapus gambar dari file
+                $path = FCPATH . 'uploads/produk/' . $nama_gambar;
+                if (file_exists($path)) {
+                    unlink($path);
+                }
+            }
+
+            // Hapus produk di database
+            $this->produk_model->hapus($id);
+
+            $this->session->set_flashdata(
+                'message',
+                '<div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
+                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
+                        <use xlink:href="#check-circle-fill" />
+                    </svg>
+                    <div>Berhasil menghapus produk!!</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>'
+            );
+
+            redirect('admin/produk');
+        } else {
+            $this->session->set_flashdata(
+                'message',
+                '<div class="alert alert-danger d-flex align-items-center alert-dismissible fade show" role="alert">
+                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+                        <use xlink:href="#exclamation-triangle-fill" />
+                    </svg>
+                    <div>produk tidak ditemukan!!</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>'
+            );
+
+            redirect('admin/produk');
+        }
+    }
+
     public function hapus_gambar($id)
     {
         $gambar = $this->produk_gambar_model->get_by_id($id);
@@ -375,4 +423,57 @@ class Produk_controller extends CI_Controller
             redirect('admin/produk');
         }
     }
-}   // <- penutup class, tetap paling bawah
+
+    public function ganti_gambar()
+    {
+        $id_gambar = $this->input->post('id_gambar');
+        $gambar    = $this->produk_gambar_model->get_by_id($id_gambar);
+
+        if (!$gambar) {
+            $this->session->set_flashdata(
+                'message',
+                '<div class="alert alert-danger">Gambar tidak ditemukan!!</div>'
+            );
+            redirect('admin/produk');
+        }
+
+        $config = [
+            'upload_path'   => FCPATH . 'uploads/produk/',
+            'allowed_types' => 'jpg|jpeg|png|gif',
+            'max_size'      => 5000,
+            'encrypt_name'  => true
+        ];
+
+        $this->load->library('upload');
+        $this->upload->initialize($config, true);
+
+        if ($this->upload->do_upload('gambar_baru')) {
+            $file = $this->upload->data();
+
+            // Perbarui nama gambar di database
+            $this->produk_gambar_model->ubah(
+                $id_gambar,
+                ['nama_gambar' => $file['file_name']]
+            );
+
+            // Hapus file gambar lama
+            $path_lama = FCPATH . 'uploads/produk/' . $gambar['nama_gambar'];
+            if (file_exists($path_lama)) {
+                unlink($path_lama);
+            }
+
+            $this->session->set_flashdata(
+                'message',
+                '<div class="alert alert-success">Berhasil mengganti gambar!!</div>'
+            );
+        } else {
+            $this->session->set_flashdata(
+                'message',
+                '<div class="alert alert-danger">Gagal mengganti gambar: '
+                . $this->upload->display_errors('', '') . '</div>'
+            );
+        }
+
+        redirect('admin/produk/ubah/' . $gambar['produk_id']);
+    }
+}

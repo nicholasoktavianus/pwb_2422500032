@@ -29,6 +29,10 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
+
+                            <!-- Pesan sukses/gagal (hapus gambar, ganti gambar, dll) -->
+                            <?= $this->session->flashdata('message') ?>
+
                             <p class="card-text">
 
                                 <form method="post"
@@ -149,6 +153,13 @@
                                                             class="card-img-top">
 
                                                         <div class="card-body">
+                                                            <!-- Tombol Ubah: pilih file untuk mengganti gambar ini -->
+                                                            <button type="button"
+                                                                    class="btn btn-primary btn-ganti-gambar me-2"
+                                                                    data-id="<?= $gambar['id_gambar'] ?>">
+                                                                Ubah
+                                                            </button>
+
                                                             <a
                                                                 href="<?= base_url('admin/produk/hapus_gambar/') . $gambar['id_gambar'] ?>"
                                                                 class="btn btn-danger">
@@ -186,6 +197,40 @@
                                 </form>
 
                             </p>
+
+                            <!--
+                                Form tersembunyi untuk mengganti satu gambar.
+                                Letaknya di luar form utama karena form tidak boleh bersarang.
+                            -->
+                            <form id="form-ganti-gambar"
+                                  method="post"
+                                  enctype="multipart/form-data"
+                                  action="<?= base_url('admin/produk/ganti_gambar') ?>"
+                                  style="display: none;">
+                                <input type="hidden"
+                                       name="id_gambar"
+                                       id="ganti_id_gambar">
+                                <input type="file"
+                                       name="gambar_baru"
+                                       id="ganti_file"
+                                       accept=".jpg,.jpeg,.png,.gif">
+                            </form>
+
+                            <script>
+                                document.querySelectorAll('.btn-ganti-gambar').forEach(function (btn) {
+                                    btn.addEventListener('click', function () {
+                                        document.getElementById('ganti_id_gambar').value = this.dataset.id;
+                                        document.getElementById('ganti_file').click();
+                                    });
+                                });
+
+                                document.getElementById('ganti_file').addEventListener('change', function () {
+                                    if (this.files.length > 0) {
+                                        document.getElementById('form-ganti-gambar').submit();
+                                    }
+                                });
+                            </script>
+
                         </div>
                     </div>
                 </div>

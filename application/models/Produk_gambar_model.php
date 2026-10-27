@@ -19,6 +19,12 @@ class Produk_gambar_model extends CI_Model
         return $query->result_array();
     }
 
+    public function ubah($id, $data)
+{
+    $this->db->where('id_gambar', $id);
+    return $this->db->update($this->_table, $data);
+}
+
     public function hapus($id)
     {
         $this->db->delete(
