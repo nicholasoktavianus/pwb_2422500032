@@ -64,7 +64,12 @@ $route['admin/kategori/tambah']         = 'administrator/Kategori_controller/tam
 $route['admin/kategori/ubah/(:num)']    = 'administrator/Kategori_controller/ubah_kategori/$1';
 $route['admin/kategori/hapus/(:num)']   = 'administrator/Kategori_controller/hapus_kategori/$1';
 
-
+$route['admin/ekspedisi2422500032']                = 'administrator/ekspedisi2422500032_controller/index';
+$route['admin/ekspedisi2422500032/tambah']         = 'administrator/ekspedisi2422500032_controller/tambah';
+$route['admin/ekspedisi2422500032/simpan']         = 'administrator/ekspedisi2422500032_controller/simpan';
+$route['admin/ekspedisi2422500032/ubah/(:num)']    = 'administrator/ekspedisi2422500032_controller/ubah/$1';
+$route['admin/ekspedisi2422500032/update/(:num)']  = 'administrator/ekspedisi2422500032_controller/update/$1';
+$route['admin/ekspedisi2422500032/hapus/(:num)']   = 'administrator/ekspedisi2422500032_controller/hapus/$1';
 
 $route['admin/produk']                 = 'administrator/Produk_controller/index';
 $route['admin/produk/tambah']          = 'administrator/Produk_controller/tambah_produk';
@@ -72,3 +77,5 @@ $route['admin/produk/ubah/(:num)']     = 'administrator/Produk_controller/ubah_p
 $route['admin/produk/hapus/(:num)']    = 'administrator/Produk_controller/hapus_produk/$1';
 $route['admin/produk/hapus_gambar/(:num)'] = 'administrator/Produk_controller/hapus_gambar/$1';
 $route['admin/produk/ganti_gambar'] = 'administrator/Produk_controller/ganti_gambar';
+
+
