@@ -148,4 +148,4 @@ class Pelanggan_controller extends CI_Controller
             redirect('register');
         }
     }
-} // ← Penutup class hanya satu kurung kurawal, bukan });
+} 

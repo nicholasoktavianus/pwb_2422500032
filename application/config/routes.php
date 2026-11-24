@@ -82,3 +82,6 @@ $route['admin/produk/ganti_gambar'] = 'administrator/Produk_controller/ganti_gam
 $route['login'] = 'pelanggan_controller/login';
 $route['register'] = 'pelanggan_controller/register';
 $route['logout'] = 'pelanggan_controller/logout';
+
+$route['produk'] = 'produk_controller/detail';
+$route['produk/(:num)'] = 'produk_controller/detail/$1';
